@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   bool buttonPushingFlag = false;
 
   Future<Map<String, dynamic>> imageInfo(
-      {String imagePath = 'https://picsum.photos/seed/0/10/10',
+      {String imagePath = 'https://picsum.photos/seed/0/12/12',
       int index,
       BuildContext context}) async {
     /// Получение информации об изображении и вызов страницы с детальным отображением информации и увеличенным изображением.
