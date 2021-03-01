@@ -14,9 +14,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController scrollControllerToTop = ScrollController();
-  Random randomValue = Random();
-  int startIndex = 2021;
-  bool buttonPushingFlag = false;
+  Random randomValue;
+  int startIndex;
+  bool buttonPushingFlag;
+
+  @override
+  void initState() {
+    super.initState();
+    randomValue = Random();
+    startIndex = 2021;
+    buttonPushingFlag = false;
+  }
 
   @override
   Widget build(BuildContext context) {
