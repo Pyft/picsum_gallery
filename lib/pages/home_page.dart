@@ -18,61 +18,6 @@ class _HomePageState extends State<HomePage> {
   int startIndex = 2021;
   bool buttonPushingFlag = false;
 
-  Future<Map<String, dynamic>> imageInfo(
-      {String imagePath = 'https://picsum.photos/seed/0/12/12',
-      int index,
-      BuildContext context}) async {
-    /// Получение информации об изображении и вызов страницы с детальным отображением информации и увеличенным изображением.
-    Map<String, dynamic> imageInfo = {
-      'id': '134',
-      'author': 'Charlie Foster',
-      'width': '4928',
-      'height': '3264',
-      'url': 'https://unsplash.com/photos/Osl4I3IS9Cw',
-      'download_url': 'https://picsum.photos/id/134/4928/3264'
-    };
-    await http.get(imagePath).then(
-      (response) {
-        imageInfo['id'] = response.headers['picsum-id'];
-      },
-    ).catchError(
-      (error) {
-        print("Error1: $error");
-      },
-    );
-    await http.get('https://picsum.photos/id/${imageInfo['id']}/info').then(
-      (response) {
-        imageInfo = jsonDecode(response.body);
-      },
-    ).catchError(
-      (error) {
-        print("Error2: $error");
-      },
-    );
-    if (imageInfo['height'] > imageInfo['width']) {
-      imagePath =
-          'https://picsum.photos/id/${imageInfo['id']}/${imageInfo['width']}/${imageInfo['width']}';
-    } else {
-      imagePath = imageInfo['download_url'];
-    }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetailsPage(
-          imagePath: imagePath,
-          index: index,
-          id: imageInfo['id'],
-          author: imageInfo['author'],
-          resolution: '${imageInfo['width']} x ${imageInfo['height']}',
-          url: imageInfo['url'],
-          downloadUrl: imageInfo['download_url'],
-        ),
-      ),
-    );
-    buttonPushingFlag = false;
-    return imageInfo;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -143,5 +88,60 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<Map<String, dynamic>> imageInfo(
+      {String imagePath = 'https://picsum.photos/seed/0/12/12',
+      int index,
+      BuildContext context}) async {
+    /// Получение информации об изображении и вызов страницы с детальным отображением информации и увеличенным изображением.
+    Map<String, dynamic> imageInfo = {
+      'id': '134',
+      'author': 'Charlie Foster',
+      'width': '4928',
+      'height': '3264',
+      'url': 'https://unsplash.com/photos/Osl4I3IS9Cw',
+      'download_url': 'https://picsum.photos/id/134/4928/3264'
+    };
+    await http.get(imagePath).then(
+      (response) {
+        imageInfo['id'] = response.headers['picsum-id'];
+      },
+    ).catchError(
+      (error) {
+        print("Error1: $error");
+      },
+    );
+    await http.get('https://picsum.photos/id/${imageInfo['id']}/info').then(
+      (response) {
+        imageInfo = jsonDecode(response.body);
+      },
+    ).catchError(
+      (error) {
+        print("Error2: $error");
+      },
+    );
+    if (imageInfo['height'] > imageInfo['width']) {
+      imagePath =
+          'https://picsum.photos/id/${imageInfo['id']}/${imageInfo['width']}/${imageInfo['width']}';
+    } else {
+      imagePath = imageInfo['download_url'];
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailsPage(
+          imagePath: imagePath,
+          index: index,
+          id: imageInfo['id'],
+          author: imageInfo['author'],
+          resolution: '${imageInfo['width']} x ${imageInfo['height']}',
+          url: imageInfo['url'],
+          downloadUrl: imageInfo['download_url'],
+        ),
+      ),
+    );
+    buttonPushingFlag = false;
+    return imageInfo;
   }
 }
